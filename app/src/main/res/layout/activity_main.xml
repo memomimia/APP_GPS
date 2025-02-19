@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:text="Калькулятор"
         android:textColor="@color/white"
-        android:textSize="25dp" />
+        android:textSize="26dp" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
