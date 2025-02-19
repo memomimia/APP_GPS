@@ -16,7 +16,9 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1e1ffb7f-5448-4e91-acb3-422fb7f1f79c" name="Changes" comment="" />
+    <list default="true" id="1e1ffb7f-5448-4e91-acb3-422fb7f1f79c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -43,18 +45,18 @@
     <option name="ROOT_SYNC" value="DONT_SYNC" />
     <option name="UPDATE_TYPE" value="REBASE" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "memomimia"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;memomimia&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/memomimia/APP_GPS.git",
-    "accountId": "d9d5d11d-190d-4b33-82dc-67159ca35106"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/memomimia/APP_GPS.git&quot;,
+    &quot;accountId&quot;: &quot;d9d5d11d-190d-4b33-82dc-67159ca35106&quot;
   }
-}]]></component>
+}</component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -167,12 +169,12 @@
       <map>
         <entry key="com.example.app_gps">
           <value>
-            <CheckInfo lastCheckTimestamp="1739882970388" />
+            <CheckInfo lastCheckTimestamp="1739977461644" />
           </value>
         </entry>
         <entry key="com.example.app_gps.test">
           <value>
-            <CheckInfo lastCheckTimestamp="1739882970385" />
+            <CheckInfo lastCheckTimestamp="1739977461645" />
           </value>
         </entry>
       </map>
