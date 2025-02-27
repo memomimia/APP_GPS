@@ -1,4 +1,4 @@
-#Tue Feb 18 21:47:00 NOVT 2025
+#Thu Feb 27 20:46:56 NOVT 2025
 base.0=C\:\\Users\\Metonimia\\AndroidStudioProjects\\APP_GPS\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
 base.1=C\:\\Users\\Metonimia\\AndroidStudioProjects\\APP_GPS\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex
 base.2=C\:\\Users\\Metonimia\\AndroidStudioProjects\\APP_GPS\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\7\\classes.dex

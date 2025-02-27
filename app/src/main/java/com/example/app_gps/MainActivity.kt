@@ -11,8 +11,8 @@ import androidx.core.view.WindowInsetsCompat
 import kotlinx.coroutines.sync.Mutex
 
 class MainActivity : AppCompatActivity() {
-    private var canAddOperation = false
-    private var canAddDecimal = true
+    private var canAddOperation = false //флаг для добавления операции
+    private var canAddDecimal = true//флаг  определяет можно ли добавить десятичную точку в текущее число
     private lateinit var workingTV: androidx.appcompat.widget.AppCompatTextView
     private lateinit var resultsTV: androidx.appcompat.widget.AppCompatTextView
 
@@ -24,74 +24,72 @@ class MainActivity : AppCompatActivity() {
         // Инициализация TextView
         workingTV = findViewById(R.id.workingTV)
         resultsTV = findViewById(R.id.resultsTV)
-
-        // Настройка отступов для полноэкранного режима
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
     }
-    fun numberAction(view: View)
+    fun numberAction(view: View)//Функция для активации цифр
     {
         if(view is Button)
         {
-            if(view.text == ".")
+            if(view.text == ".")//Проверка если число с точкой
             {
-                if(canAddDecimal)
+                if(canAddDecimal)//Проверка можно ли добавить десятичную точку
                     workingTV.append(view.text)
-                canAddDecimal = false
+                canAddDecimal = false//ставим флаг на false чтобы нельззя было поставить еще точку
             }
             else
-                workingTV.append(view.text)
+                workingTV.append(view.text)//Иначе добавляем нажатую цифру
             canAddOperation = true
         }
     }
-    fun operationAction(view: View)
+    fun operationAction(view: View)//функция активации операций
     {
-        if(view is Button && canAddOperation)
+        if(view is Button && canAddOperation)//Если наша view это кнопка и мы можем добавить операцию пока canAddOperation = true
         {
-            workingTV.append(view.text)
+            workingTV.append(view.text)//Добавляем нажатую операцию
             canAddOperation = false
             canAddDecimal = true
         }
     }
-    fun clearAction(view: View)
+    fun clearAction(view: View)//функция очистки
     {
-        workingTV.text = ""
-        resultsTV.text = ""
+        workingTV.text = ""//очищаем строку
+        resultsTV.text = "0"//в результат ставим 0
     }
-    fun backspaceAction(view: View)
+    fun backspaceAction(view: View)//функция стирания
     {
        val length = workingTV.length()
        if(length > 0)
             workingTV.text = workingTV.text.subSequence(0, length -1)
     }
-    fun equalsAction(view: View)
+    fun equalsAction(view: View)//функция вычисления результата
     {
         resultsTV.text = calculateResults()
     }
 
-    private fun calculateResults(): String
+    private fun calculateResults(): String//функция для вычисления результата
     {
-        val digitsOperators = digitsOperators()
-        if (digitsOperators.isEmpty()) return  ""
+        val digitsOperators = digitsOperators()//возвращает список цифр или операций введенных пользователем
+        if (digitsOperators.isEmpty()) return  ""//Если список пуст, то выводится пустота
 
-        val timesDivision = timesDivisionCalculate(digitsOperators)
+        val timesDivision = timesDivisionCalculate(digitsOperators)//выполняет вычисления для операций которые выполняются в первую очередь
         if (timesDivision.isEmpty()) return  ""
-        val result = addSubtractCalculate(timesDivision)
+        val result = addSubtractCalculate(timesDivision)//выполняет вычисления для операций которые выполняются после
         return result.toString()
     }
 
-    private fun addSubtractCalculate(passedList: MutableList<Any>): Float
+    private fun addSubtractCalculate(passedList: MutableList<Any>): Float//функция,которая принимает список с элементами произвольного типа и возвращает число типа float
     {
-        var result = passedList[0] as Float
-        for(i in passedList.indices)
+        var result = passedList[0] as Float//первый элемент в списке  float
+        for(i in passedList.indices)//перебираем все индексы
         {
-            if(passedList[i] is Char && i != passedList.lastIndex)
+            if(passedList[i] is Char && i != passedList.lastIndex)//проверка на оператор при условии, что это не последний элемент в списке
             {
-                val operator = passedList[i]
-                val nextDigit = passedList[i + 1] as Float
+                val operator = passedList[i]//Если оператор, то сохраняется в эту переменную
+                val nextDigit = passedList[i + 1] as Float//следующий элемент сохраняется как float, тк это не оператор
                 if (operator == '+')
                     result += nextDigit
                 if (operator == '-')
@@ -105,69 +103,56 @@ class MainActivity : AppCompatActivity() {
     private fun timesDivisionCalculate(passedList: MutableList<Any>): MutableList<Any>
     {
        var list = passedList
-       while (list.contains('x') || list.contains('/'))
+       while (list.contains('x') || list.contains('/'))//Пока есть операции умножения и деления
        {
-           list = calcTimesDiv(list)
+           list = calcTimesDiv(list)//выполняем соотв. операцию
        }
         return list
     }
 
-    private fun calcTimesDiv(passedList: MutableList<Any>): MutableList<Any>
-    {
-        val newList = mutableListOf<Any>()
-        var restartIndex = passedList.size
-        for (i in passedList.indices)
-        {
-            if(passedList[i] is Char && i != passedList.lastIndex && i < restartIndex)
-            {
-                val operator = passedList[i]
-                val prevDigit = passedList[i - 1] as Float
-                val nextDigit = passedList[i + 1] as Float
-                when(operator)
-                {
-                   'x' ->
-                   {
-                       newList.add(prevDigit * nextDigit)
-                       restartIndex = i + 1
-                   }
-                    '/' ->
-                    {
-                        newList.add(prevDigit / nextDigit)
-                        restartIndex = i + 1
-                    }
-                    else ->
-                    {
-                       newList.add(prevDigit)
-                       newList.add(operator)
-                    }
+    private fun calcTimesDiv(passedList: MutableList<Any>): MutableList<Any> {
+        val newList = mutableListOf<Any>()//новый список для хранения вычислений
+        var restartIndex = passedList.size//отслеживает индекс который не был учтен
+        for (i in passedList.indices) {
+            if (passedList[i] is Char && i != passedList.lastIndex && i < restartIndex) {
+                val operator = passedList[i]//если текуций символ оператор
+                val prevDigit = passedList[i - 1] as Float//предыдущий это число
+                val nextDigit = passedList[i + 1] as Float//следующий число
+                if (operator == 'x') {
+                    newList.add(prevDigit * nextDigit)
+                    restartIndex = i + 1
+                } else if (operator == '/') {
+                    newList.add(prevDigit / nextDigit)
+                    restartIndex = i + 1
+                } else {//если оператор умножение и не деление добавляем предыдущее число и оператор
+                    newList.add(prevDigit)
+                    newList.add(operator)
                 }
             }
-            if (i > restartIndex)
+            if (i > restartIndex) {
                 newList.add(passedList[i])
+            }
         }
-
         return newList
     }
 
     private fun digitsOperators(): MutableList<Any>
     {
-        val list = mutableListOf<Any>()
-        var currentDigit = ""
-        for (character in workingTV.text)
+        val list = mutableListOf<Any>()//новый список для
+        var currentDigit = ""//переменная для цифр
+        for (simvol in workingTV.text)//перебор по каждому символу
         {
-            if(character.isDigit() || character == '.')
-                currentDigit += character
+            if(simvol.isDigit() || simvol == '.')//если наш символ это цифра или точка
+                currentDigit += simvol// то символ добавляем это число
             else
-            {
-                list.add(currentDigit.toFloat())
-                currentDigit = ""
-                list.add(character)
+            {//если не символ
+                list.add(currentDigit.toFloat())//то добавляем текущее число во float
+                currentDigit = ""//текущее число очищается для ввода нового
+                list.add(simvol)
             }
         }
-        if(currentDigit != "")
-            list.add(currentDigit.toFloat())
-
-
+        if(currentDigit != "")//если не пустое значение
+            list.add(currentDigit.toFloat())//добавляем число типом float
         return  list
     }
 
